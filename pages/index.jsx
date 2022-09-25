@@ -21,7 +21,7 @@ const stake = () => {
     }
   };
 
-  const [compoundValue, setCompoundValue] = useState(30);
+  const [compoundValue, setCompoundValue] = useState(3);
 
   return (
     <div className="text-white text-lg ">
@@ -67,16 +67,16 @@ const stake = () => {
                   <option default disabled>
                     Compound select
                   </option>
-                  <option className="py-3" value="30">
+                  <option className="py-3" value="3">
                     30 days
                   </option>
-                  <option className="py-3" value="60">
+                  <option className="py-3" value="5">
                     60 days
                   </option>
-                  <option className="py-3" value="90">
+                  <option className="py-3" value="7">
                     90 days
                   </option>
-                  <option className="py-3" value="120">
+                  <option className="py-3" value="9">
                     120 days
                   </option>
                 </select>

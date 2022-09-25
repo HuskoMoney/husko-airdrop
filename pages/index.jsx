@@ -2,26 +2,27 @@ import React from "react";
 
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
-import { connect, disconnect} from "../global/utils/web3";
+import { connect, disconnect } from "../global/utils/web3";
 import { updateChain } from "../global/features/blockchainSlice";
 // React
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
 // Redux
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 
 const stake = () => {
-  const account = useSelector((state) => state.blockchain.account)
-  const dispatch = useDispatch()
+  const account = useSelector(state => state.blockchain.account);
+  const dispatch = useDispatch();
   const connectweb3 = () => {
     if (account) {
-      disconnect().then(
-        (data) => dispatch(updateChain(data))
-      )
+      disconnect().then(data => dispatch(updateChain(data)));
     } else {
-      connect().then((data) => dispatch(updateChain(data)))
+      connect().then(data => dispatch(updateChain(data)));
     }
-  }
+  };
+
+  const [compoundValue, setCompoundValue] = useState(30);
+
   return (
     <div className="text-white text-lg ">
       <Header />
@@ -41,72 +42,88 @@ const stake = () => {
             <h1 className="text-3xl sm:text-4xl">
               Stake to <span className="text-red-600">HUSKO tokens</span>
             </h1>
-            <p className="font-bold -mt-4 py-6">Acquire 15% worth returns</p>
+            <p className="font-bold -mt-4 py-6">
+              Acquire {compoundValue}% worth returns
+            </p>
 
-            <div className="mb-5 w-full">
-              <input
-                type="number"
-                name="stake"
-                className="py-4 px-3 text-black text-3xl w-full outline-red-600"
-                placeholder="0"
-              />
-            </div>
+            <form>
+              <div className="mb-5 w-full">
+                <input
+                  type="number"
+                  name="stake"
+                  className="py-4 px-3 text-black text-3xl w-full outline-red-600"
+                  placeholder="0"
+                />
+              </div>
 
-            <div className="button-group mb-5 flex flex-col sm:flex-row gap-4">
-              <select
-                className="py-3 px-2 flex-1 text-black text-lg outline-red-600"
-                name="compoundSelect"
-                id=""
-              >
-                <option default value="0">
-                  Compound select
-                </option>
-                <option className="py-3" value="30">
-                  30 days
-                </option>
-                <option className="py-3" value="60">
-                  60 days
-                </option>
-                <option className="py-3" value="90">
-                  90 days
-                </option>
-                <option className="py-3" value="120">120 days</option>
-              </select>
-              {account == null ? <Button
-                style={"solid"}
-                type={"button"}
-                text={"connect to stake"}
-                action={_ => {
-                  connectweb3()
-                }}
-              /> : <Button
-              style={"solid"}
-              type={"button"}
-              text={"Approve"}
-              action={_ => {}}
-            />}
-              
-            </div>
-
+              <div className="button-group mb-5 flex flex-col sm:flex-row gap-4">
+                <select
+                  className="py-3 px-2 flex-1 text-black text-lg outline-red-600"
+                  name="compoundSelect"
+                  onChange={e => {
+                    setCompoundValue(e.target.value);
+                  }}
+                >
+                  <option default disabled>
+                    Compound select
+                  </option>
+                  <option className="py-3" value="30">
+                    30 days
+                  </option>
+                  <option className="py-3" value="60">
+                    60 days
+                  </option>
+                  <option className="py-3" value="90">
+                    90 days
+                  </option>
+                  <option className="py-3" value="120">
+                    120 days
+                  </option>
+                </select>
+                {account == null ? (
+                  <Button
+                    style={"solid"}
+                    type={"button"}
+                    text={"connect to stake"}
+                    action={_ => {
+                      connectweb3();
+                    }}
+                  />
+                ) : (
+                  <Button
+                    style={"solid"}
+                    type={"submit"}
+                    text={"Approve"}
+                    action={_ => {
+                      alert("Submitted");
+                    }}
+                  />
+                )}
+              </div>
+            </form>
             <div className="flex flex-col sm:flex-row gap-4 mb-5">
               <div className="flex-1 border py-3 px-3 border-white">
                 <p>Total amount staked</p>
-                <p className="font-bold text-2xl text-red-600">{"1300 Husko"}</p>
+                <p className="font-bold text-2xl text-red-600">
+                  {"1300 Husko"}
+                </p>
               </div>
               <div className="flex-1 border py-3 px-3 border-white">
                 <p>Total rewards</p>
-                <p className="font-bold text-2xl text-red-600">{"1600 husko"}</p>
+                <p className="font-bold text-2xl text-red-600">
+                  {"1600 husko"}
+                </p>
               </div>
             </div>
 
             <div className="flex mb-5">
               <div className="flex-1 border py-3 px-3 border-white">
                 <p>Total staked</p>
-                <p className="font-bold text-3xl text-red-600">{"1600 husko"}</p>
+                <p className="font-bold text-3xl text-red-600">
+                  {"1600 husko"}
+                </p>
               </div>
             </div>
-
-            
           </div>
         </div>
       </div>

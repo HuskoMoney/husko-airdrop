@@ -4,11 +4,11 @@
 /* @tailwind base;
 @tailwind components;
 @tailwind utilities; */
-/* @import './base.css'; */ 
+/* @import './base.css'; */
 
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @font-face {
   font-family: "Furore";
@@ -41,7 +41,9 @@ h6 {
   font-family: "Furore", sans-serif;
 }
 
-p {
+p,
+input,
+select {
   font-family: "IBM Plex Mono", monospace;
 }
 .header__nav {
@@ -64,7 +66,7 @@ p {
 } */
 
 @media (max-width: 640px) {
-    /* .header__nav {
+  /* .header__nav {
         justify-content: end;
     }
   .header__nav ul {
@@ -73,9 +75,9 @@ p {
 }
 
 svg {
-    height: 2rem
+  height: 2rem;
 }
 
 footer {
-    background-color: #152030;
+  background-color: #152030;
 }

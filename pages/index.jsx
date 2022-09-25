@@ -107,6 +107,16 @@ const stake = () => {
                 <p className="font-bold text-2xl text-red-600">
                   {"1300 Husko"}
                 </p>
+                <div className="p-2 mt-2">
+                  <Button
+                    style={"solid"}
+                    type={"submit"}
+                    text={"unstake"}
+                    action={_ => {
+                      alert("unstaked");
+                    }}
+                  />
+                </div>
               </div>
               <div className="flex-1 border py-3 px-3 border-white">
                 <p>Total rewards</p>

@@ -16,7 +16,7 @@ export default function Header() {
     <header className="bg-slate-500">
       <Head>
         <title>Mint- HUSKO NFT</title>
-        <link rel="icon" href="/favicon.svg"/>
+        <link rel="icon" href="/favicon.svg" />
       </Head>
       <nav className="header__nav  flex justify-end sm:justify-center">
         <div
@@ -44,22 +44,25 @@ export default function Header() {
           className="hidden sm:flex pr-6 sm:pr-0 space-y-3 sm:space-y-0 sm:space-x-10 font-bold text-white "
         >
           <li>
-            <a className="text-red-500" href="http://#">
+            <a className="text-red-500" href="/">
               {" "}
               Home
             </a>
           </li>
           <li>
-            <a href="http://#"> About</a>
+            <a href="/about"> About</a>
           </li>
           <li>
-            <a href="http://#"> News</a>
+            <a href="/stake"> Stake</a>
           </li>
           <li>
-            <a href="http://#"> Exchanges</a>
+            <a href="/news"> News</a>
           </li>
           <li>
-            <a href="http://#"> Dapps</a>
+            <a href="/exchange"> Exchanges</a>
+          </li>
+          <li>
+            <a href="dapp"> Dapps</a>
           </li>
         </ul>
       </nav>

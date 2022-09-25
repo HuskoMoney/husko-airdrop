@@ -2,8 +2,26 @@ import React from "react";
 
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
+import { connect, disconnect} from "../global/utils/web3";
+import { updateChain } from "../global/features/blockchainSlice";
+// React
+import { useEffect, useState } from 'react'
+
+// Redux
+import { useDispatch, useSelector } from 'react-redux'
 
 const stake = () => {
+  const account = useSelector((state) => state.blockchain.account)
+  const dispatch = useDispatch()
+  const connectweb3 = () => {
+    if (account) {
+      disconnect().then(
+        (data) => dispatch(updateChain(data))
+      )
+    } else {
+      connect().then((data) => dispatch(updateChain(data)))
+    }
+  }
   return (
     <div className="text-white text-lg ">
       <Header />
@@ -54,13 +72,20 @@ const stake = () => {
                 </option>
                 <option className="py-3" value="120">120 days</option>
               </select>
-
-              <Button
+              {account == null ? <Button
                 style={"solid"}
                 type={"button"}
                 text={"connect to stake"}
-                action={_ => {}}
-              />
+                action={_ => {
+                  connectweb3()
+                }}
+              /> : <Button
+              style={"solid"}
+              type={"button"}
+              text={"Approve"}
+              action={_ => {}}
+            />}
+              
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-5">

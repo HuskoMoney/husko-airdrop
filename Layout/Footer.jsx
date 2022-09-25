@@ -25,18 +25,18 @@ export default function Footer() {
           <ul className="social__media flex justify-center lg:justify-start  space-x-8 mt-6">
             <li>
               <a href="http://#">
-                <img src="/icons/svg/twitter.svg" className="w-5" alt="" />
+                <img src="/icons/SVG/twitter.svg" className="w-5" alt="" />
               </a>
             </li>
             <li>
               <a href="http://#">
-                <img src="/icons/svg/github.svg" className="w-5" alt="" />
+                <img src="/icons/SVG/github.svg" className="w-5" alt="" />
               </a>
             </li>
             <li>
               <a href="http://#">
                 <img
-                  src="/icons/svg/git.svg"
+                  src="/icons/SVG/git.svg"
                   className="w-5"
                   alt="telegram icon"
                 />
@@ -44,7 +44,7 @@ export default function Footer() {
             </li>
             <li>
               <a href="http://#">
-                <img src="/icons/svg/mail.svg" className="w-5" alt="" />
+                <img src="/icons/SVG/mail.svg" className="w-5" alt="" />
               </a>
             </li>
           </ul>

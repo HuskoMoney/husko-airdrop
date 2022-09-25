@@ -43,21 +43,22 @@ const stake = () => {
                 <option default value="0">
                   Compound select
                 </option>
-                <option className="py-3" value="15">
-                  15 days
-                </option>
-                <option className="py-3" value="20">
-                  20 days
-                </option>
                 <option className="py-3" value="30">
                   30 days
                 </option>
+                <option className="py-3" value="60">
+                  60 days
+                </option>
+                <option className="py-3" value="90">
+                  90 days
+                </option>
+                <option className="py-3" value="120">120 days</option>
               </select>
 
               <Button
                 style={"solid"}
                 type={"button"}
-                text={"Approve"}
+                text={"connect to stake"}
                 action={_ => {}}
               />
             </div>
@@ -65,18 +66,18 @@ const stake = () => {
             <div className="flex flex-col sm:flex-row gap-4 mb-5">
               <div className="flex-1 border py-3 px-3 border-white">
                 <p>Total amount staked</p>
-                <p className="font-bold text-2xl text-red-600">{"13 Winns"}</p>
+                <p className="font-bold text-2xl text-red-600">{"1300 Husko"}</p>
               </div>
               <div className="flex-1 border py-3 px-3 border-white">
                 <p>Total rewards</p>
-                <p className="font-bold text-2xl text-red-600">{"16 Winns"}</p>
+                <p className="font-bold text-2xl text-red-600">{"1600 husko"}</p>
               </div>
             </div>
 
             <div className="flex mb-5">
               <div className="flex-1 border py-3 px-3 border-white">
                 <p>Total staked</p>
-                <p className="font-bold text-3xl text-red-600">{"16 Winns"}</p>
+                <p className="font-bold text-3xl text-red-600">{"1600 husko"}</p>
               </div>
             </div>
 

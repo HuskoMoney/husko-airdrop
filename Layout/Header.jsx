@@ -15,7 +15,7 @@ export default function Header() {
   return (
     <header className="bg-slate-500">
       <Head>
-        <title>Mint- HUSKO NFT</title>
+        <title>Stake- HUSKO </title>
         <link rel="icon" href="/favicon.svg" />
       </Head>
       <nav className="header__nav  flex justify-end sm:justify-center">

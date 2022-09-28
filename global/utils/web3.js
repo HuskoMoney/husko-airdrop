@@ -35,17 +35,36 @@ export const connect = async () => {
     console.log(provider.chainId)
     if(provider.chainId == 0x13881) {
     try {
+        const tokenAbi = await fetch('config/tokenAbi.json')
+        const abiJson = await tokenAbi.json()
+        const stakeAbi = await fetch('config/mint.json')
+        const stakeJson = await stakeAbi.json()
+        Web3EthContract.setProvider(provider)
+
+        const contract = new Web3EthContract(abiJson, '0xEc62AA55F5Aac3d2b57126a3851954072763caDB')
+        const stakingContract = new Web3EthContract(stakeJson, '0x828bF85bdD2DEC27d4223c0EDb3f25Fb82dFE3c4')
+
+        
 
         let web3 = new Web3(provider);
         let accounts = await web3.eth.getAccounts()
         let balance = await web3.eth.getBalance(accounts[0])
         let account = accounts[0]
-
+        let allowance = await contract.methods.allowance(account, '0x828bF85bdD2DEC27d4223c0EDb3f25Fb82dFE3c4').call()
+        let stake6 = await stakingContract.methods._stake6(account).call()
+        let stake9 = await stakingContract.methods._stake9(account).call()
+        let stake12 = await stakingContract.methods._stake12(account).call()
+        let stake15 = await stakingContract.methods._stake15(account).call()
+        let totalStaked = await stake6.amount
+        console.log(totalStaked)
+        console.log(allowance)
 
         return {
             account,
             balance,
-            provider
+            provider,
+            allowance,
+            totalStaked
         }
     } catch (err) {
         console.log(err);
@@ -65,6 +84,23 @@ export const disconnect = async () => {
     return null;
 }
 
+export const Approve = async () => {
+    const tokenAbi = await fetch('config/tokenAbi.json')
+    const abiJson = await tokenAbi.json()
+    await Web3EthContract.setProvider(store.getState().blockchain.provider)
+    const contract = new Web3EthContract(abiJson, '0xEc62AA55F5Aac3d2b57126a3851954072763caDB')
+
+    try {
+        await contract.methods.approve('0x828bF85bdD2DEC27d4223c0EDb3f25Fb82dFE3c4', 10000000).send({
+            from: store.getState().blockchain.account
+        })
+    } catch (err) {
+        console.log(err)
+    }
+
+
+}
+
 export const Mint = async (mintAmount) => {
     const tokenAbi = await fetch('config/abi.json')
     const abiJson = await tokenAbi.json()
@@ -77,6 +113,49 @@ export const Mint = async (mintAmount) => {
             from: store.getState().blockchain.account,
             value: (mintAmount * 2) * 10**18
         })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const Stake = async (compoundValue, amount) => {
+    const mintAbi = await fetch('config/mint.json')
+    const abiJson = await mintAbi.json()
+
+    Web3EthContract.setProvider(store.getState().blockchain.provider)
+    let web3 = new Web3(store.getState().blockchain.provider);
+
+    const contract = new Web3EthContract(abiJson, '0x828bF85bdD2DEC27d4223c0EDb3f25Fb82dFE3c4')
+
+    try {
+        if(amount < 2) {
+            alert('Please input amount needed')
+        } else {
+            if(compoundValue == 3) {
+                await contract.methods.stake6(web3.utils.toWei(amount)).send({
+                    from: store.getState().blockchain.account
+                })
+                alert('Successfully staked for 30 Days')
+            } else if(compoundValue == 5) {
+                await contract.methods.stake9(web3.utils.toWei(amount)).send({
+                    from: store.getState().blockchain.account
+                })
+                alert('Successfully staked for 60 Days')
+            } else if(compoundValue == 7) {
+                await contract.methods.stake12(web3.utils.toWei(amount)).send({
+                    from: store.getState().blockchain.account
+                })
+                alert('Successfully staked for 90 Days')
+            } else if(compoundValue == 9) {
+                await contract.methods.stake15(web3.utils.toWei(amount)).send({
+                    from: store.getState().blockchain.account
+                })
+                alert('Successfully staked for 120 Days')
+            }
+        }
+        console.log(compoundValue);
+        console.log(amount)
+
     } catch (err) {
         console.log(err)
     }

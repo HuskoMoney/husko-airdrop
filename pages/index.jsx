@@ -2,7 +2,7 @@ import React from "react";
 
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
-import { connect, disconnect } from "../global/utils/web3";
+import { connect, disconnect, Approve, Stake} from "../global/utils/web3";
 import { updateChain } from "../global/features/blockchainSlice";
 // React
 import { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const stake = () => {
   const account = useSelector(state => state.blockchain.account);
+  const blocks = useSelector((state) => state.blockchain);
   const dispatch = useDispatch();
   const connectweb3 = () => {
     if (account) {
@@ -22,6 +23,7 @@ const stake = () => {
   };
 
   const [compoundValue, setCompoundValue] = useState(3);
+  const [amount, SetAmount] = useState(1);
 
   return (
     <div className="text-white text-lg ">
@@ -53,6 +55,9 @@ const stake = () => {
                   name="stake"
                   className="py-4 px-3 text-black text-3xl w-full outline-red-600"
                   placeholder="0"
+                  onChange = {e => {
+                    SetAmount(e.target.value)
+                  }}
                 />
               </div>
 
@@ -90,18 +95,33 @@ const stake = () => {
                     }}
                   />
                 ) : (
+                  <>
+                  {blocks.allowance == 0 ? 
+                  <>
                   <Button
                     style={"solid"}
-                    type={"submit"}
+                   // type={"button"}
                     text={"Approve"}
-                    action={_ => {
-                      alert("Submitted");
+                    action={(e) => {
+                      e.preventDefault()
+                     Approve()
                     }}
-                  />
+                  /> </>:  <><Button
+                  style={"solid"}
+                  //type={"submit"}
+                  text={"Stake"}
+                  action={(e) => {
+                    e.preventDefault()
+                    Stake(compoundValue, amount)
+                  }}
+                /></>}
+                  
+                  </>
                 )}
               </div>
             </form>
             <div className="flex flex-col sm:flex-row gap-4 mb-5">
+              
               <div className="flex-1 border py-3 px-3 border-white">
                 <p>Total amount staked</p>
                 <p className="font-bold text-2xl text-red-600">

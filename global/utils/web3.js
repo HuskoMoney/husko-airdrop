@@ -55,8 +55,10 @@ export const connect = async () => {
         let stake9 = await stakingContract.methods._stake9(account).call()
         let stake12 = await stakingContract.methods._stake12(account).call()
         let stake15 = await stakingContract.methods._stake15(account).call()
-        let totalStaked = await stake6.amount
+        let totalStaked = (await stake6.amount)
+        let allTotal = totalStaked + 10000
         console.log(totalStaked)
+        console.log(stake6)
         console.log(allowance)
 
         return {
@@ -64,7 +66,8 @@ export const connect = async () => {
             balance,
             provider,
             allowance,
-            totalStaked
+            totalStaked,
+            allTotal
         }
     } catch (err) {
         console.log(err);
@@ -132,22 +135,22 @@ export const Stake = async (compoundValue, amount) => {
             alert('Please input amount needed')
         } else {
             if(compoundValue == 3) {
-                await contract.methods.stake6(web3.utils.toWei(amount)).send({
+                await contract.methods.stake6(amount).send({
                     from: store.getState().blockchain.account
                 })
                 alert('Successfully staked for 30 Days')
             } else if(compoundValue == 5) {
-                await contract.methods.stake9(web3.utils.toWei(amount)).send({
+                await contract.methods.stake9(amount).send({
                     from: store.getState().blockchain.account
                 })
                 alert('Successfully staked for 60 Days')
             } else if(compoundValue == 7) {
-                await contract.methods.stake12(web3.utils.toWei(amount)).send({
+                await contract.methods.stake12(amount).send({
                     from: store.getState().blockchain.account
                 })
                 alert('Successfully staked for 90 Days')
             } else if(compoundValue == 9) {
-                await contract.methods.stake15(web3.utils.toWei(amount)).send({
+                await contract.methods.stake15(amount).send({
                     from: store.getState().blockchain.account
                 })
                 alert('Successfully staked for 120 Days')

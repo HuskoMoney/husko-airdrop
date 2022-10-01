@@ -56,7 +56,10 @@ export const connect = async () => {
         let stake12 = await stakingContract.methods._stake12(account).call()
         let stake15 = await stakingContract.methods._stake15(account).call()
         let totalStaked = (await stake6.amount)
-        let allTotal = totalStaked + 10000
+        let stake6Amount = await stake6.amount
+        let stake9Amount = await stake9.amount
+        let stake12Amount = await stake12.amount
+        let stake15Amount = await stake15.amount
         console.log(totalStaked)
         console.log(stake6)
         console.log(allowance)
@@ -67,7 +70,10 @@ export const connect = async () => {
             provider,
             allowance,
             totalStaked,
-            allTotal
+            stake6Amount,
+            stake9Amount,
+            stake12Amount,
+            stake15Amount
         }
     } catch (err) {
         console.log(err);

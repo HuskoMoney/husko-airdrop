@@ -7,7 +7,11 @@ const initialState = {
     provider: null,
     allowance: 0,
     totalStaked: 0,
-    allTotal: 0
+    allTotal: 0,
+    stake6Amount: 0,
+    stake9Amount: 0,
+    stake12Amount: 0,
+    stake15Amount:0
 }
 
 export const blockchainSlice = createSlice({
@@ -22,6 +26,10 @@ export const blockchainSlice = createSlice({
                 state.allowance = action.payload.allowance
                 state.totalStaked = action.payload.totalStaked
                 state.allTotal = action.payload.allTotal
+                state.stake6Amount = action.payload.stake6Amount
+                state.stake9Amount = action.payload.stake9Amount
+                state.stake12Amount = action.payload.stake12Amount
+                state.stake15Amount = action.payload.stake15Amount
             } else {
                 state.account = null
                 state.balance = 0
@@ -29,6 +37,10 @@ export const blockchainSlice = createSlice({
                 state.allowance = 0
                 state.totalStaked = 0
                 state.allTotal = 0
+                state.stake6Amount = 0
+                state.stake9Amount = 0
+                state.stake12Amount = 0
+                state.stake15Amount = 0
             }
         }
     }

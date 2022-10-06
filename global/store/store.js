@@ -10,7 +10,7 @@ export const store = configureStore({
         getDefaultMiddleware({
             serializableCheck: {
                 ignoredActions: ['blockchain/updateChain'],
-                ignoredPaths: ['blockchain.provider'],
+                ignoredPaths: ['blockchain.provider', 'blockchain.stake12', 'blockchain.stake6', 'blockchain.stake9', 'blockchain.stake15'],
             },
         }),
 })

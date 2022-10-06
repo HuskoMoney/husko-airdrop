@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import stake from '../../pages'
 
 const initialState = {
     loading: false,
@@ -11,7 +12,11 @@ const initialState = {
     stake6Amount: 0,
     stake9Amount: 0,
     stake12Amount: 0,
-    stake15Amount:0
+    stake15Amount:0,
+    stake6: {},
+    stake9: {},
+    stake12: {},
+    stake15: {}
 }
 
 export const blockchainSlice = createSlice({
@@ -30,6 +35,10 @@ export const blockchainSlice = createSlice({
                 state.stake9Amount = action.payload.stake9Amount
                 state.stake12Amount = action.payload.stake12Amount
                 state.stake15Amount = action.payload.stake15Amount
+                state.stake12 = action.payload.stake12
+                state.stake6 = action.payload.stake6
+                state.stake9 = action.payload.stake9
+                state.stake15 = action.payload.stake15
             } else {
                 state.account = null
                 state.balance = 0
@@ -41,6 +50,10 @@ export const blockchainSlice = createSlice({
                 state.stake9Amount = 0
                 state.stake12Amount = 0
                 state.stake15Amount = 0
+                state.stake6 = {}
+                state.stake9 = {}
+                state.stake12 = {}
+                state.stake15 = {}
             }
         }
     }

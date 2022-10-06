@@ -2,7 +2,7 @@ import React from "react";
 
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
-import { connect, disconnect, Approve, Stake} from "../global/utils/web3";
+import { connect, disconnect, Approve, Stake, UnStake} from "../global/utils/web3";
 import { updateChain } from "../global/features/blockchainSlice";
 // React
 import { useEffect, useState } from "react";
@@ -14,6 +14,7 @@ const stake = () => {
   const account = useSelector(state => state.blockchain.account);
   const blocks = useSelector((state) => state.blockchain);
   const dispatch = useDispatch();
+  const [totalStake, setTotalStake] = useState(0)
   const connectweb3 = () => {
     if (account) {
       disconnect().then(data => dispatch(updateChain(data)));
@@ -24,6 +25,73 @@ const stake = () => {
 
   const [compoundValue, setCompoundValue] = useState(3);
   const [amount, SetAmount] = useState(1);
+  const [stakingDate, setStakingDate]= useState(0)
+  const [stakingEnd, setStakingEnd] = useState(0)
+  useEffect(() => {
+    if(blocks.account) {
+    //var tarehe = new Date(blocks.stake12.timestampEnd * 1000).toLocaleDateString("en-US")
+    var stake6Date = new Date(blocks.stake6.timestamp * 1000).toLocaleDateString("en-UK")
+    var stake9Date = new Date(blocks.stake9.timestamp * 1000).toLocaleDateString("en-UK")
+    var stake12Date = new Date(blocks.stake12.timestamp * 1000).toLocaleDateString("en-UK")
+    var stake15Date = new Date(blocks.stake15.timestamp * 1000).toLocaleDateString("en-UK")
+    var stake6endDate = new Date(blocks.stake6.timestampEnd * 1000).toLocaleDateString("en-UK")
+    var stake9endDate = new Date(blocks.stake9.timestampEnd * 1000).toLocaleDateString("en-UK")
+    var stake12endDate = new Date(blocks.stake12.timestampEnd * 1000).toLocaleDateString("en-UK")
+    var stake15endDate = new Date(blocks.stake15.timestampEnd * 1000).toLocaleDateString("en-UK")
+    //setStakingDate(hehe)
+    if(compoundValue == 3) {
+      if(blocks.stake6.timestamp == 0) {
+        setStakingDate(0)
+        setStakingEnd(0)
+      } else {
+        setStakingDate(stake6Date)
+        setStakingEnd(stake6endDate)
+      }
+      
+      
+    } else if(compoundValue == 5 ) {
+      if(blocks.stake9.timestamp == 0) {
+        setStakingDate(0)
+        setStakingEnd(0)
+      } else {
+        setStakingDate(stake9Date)
+        setStakingEnd(stake9endDate)
+      }
+    } else if (compoundValue == 7) {
+      if(blocks.stake12.timestamp == 0) {
+        setStakingDate(0)
+        setStakingEnd(0)
+      } else {
+        setStakingDate(stake12Date)
+        setStakingEnd(stake12endDate)
+      }
+    } else if (compoundValue == 9){
+      if(blocks.stake15.timestamp == 0) {
+        setStakingDate(0)
+        setStakingEnd(0)
+      } else {
+        setStakingDate(stake15Date)
+        setStakingEnd(stake15endDate)
+      }
+    }
+    
+
+    
+    }
+  }, [compoundValue, stakingDate, stakingEnd])
+
+  useEffect(() => {
+    if(compoundValue == 3) {
+      setTotalStake(blocks.stake6Amount)
+      
+    } else if(compoundValue == 5) {
+      setTotalStake(blocks.stake9Amount)
+    } else if (compoundValue == 7) {
+      setTotalStake(blocks.stake12Amount) 
+    } else if (compoundValue == 9){
+      setTotalStake(blocks.stake15Amount)
+    }
+  },[compoundValue, totalStake]) 
 
   return (
     <div className="text-white text-lg ">
@@ -123,26 +191,19 @@ const stake = () => {
             <div className="flex flex-col sm:flex-row gap-4 mb-5">
               
               <div className="flex-1 border py-3 px-3 border-white">
-                <p>Total amount staked</p>
+                <p>Staking Start</p>
                 <p className="font-bold text-2xl text-red-600">
-                  {blocks.totalStaked} HUSKO
+                  {stakingDate} 
                 </p>
                 <div className="p-2 mt-2">
-                  {blocks.totalStaked == 0 ? <></> : <Button
-                    style={"solid"}
-                    type={"submit"}
-                    text={"unstake"}
-                    action={_ => {
-                      alert("unstaked");
-                    }}
-                  />}
+                  
                   
                 </div>
               </div>
               <div className="flex-1 border py-3 px-3 border-white">
-                <p>Total rewards</p>
+                <p>Staking End</p>
                 <p className="font-bold text-2xl text-red-600">
-                  {"1600 husko"}
+                  {stakingEnd}
                 </p>
               </div>
             </div>
@@ -151,7 +212,16 @@ const stake = () => {
               <div className="flex-1 border py-3 px-3 border-white">
                 <p>Total staked</p>
                 <p className="font-bold text-3xl text-red-600">
-                  {"1600 husko"}
+                  {totalStake +" husko"}
+
+                  {totalStake == 0 ? <></> : <Button
+                    style={"solid"}
+                    type={"submit"}
+                    text={"unstake"}
+                    action={_ => {
+                      UnStake(compoundValue);
+                    }}
+                  />}
                 </p>
               </div>
             </div>

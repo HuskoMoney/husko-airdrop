@@ -4,6 +4,7 @@ import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
 import { connect, disconnect, Approve, Stake, UnStake} from "../global/utils/web3";
 import { updateChain } from "../global/features/blockchainSlice";
+import Web3 from 'web3'
 // React
 import { useEffect, useState } from "react";
 
@@ -15,6 +16,7 @@ const stake = () => {
   const blocks = useSelector((state) => state.blockchain);
   const dispatch = useDispatch();
   const [totalStake, setTotalStake] = useState(0)
+  const [received, setReceived] = useState(0)
   const connectweb3 = () => {
     if (account) {
       disconnect().then(data => dispatch(updateChain(data)));
@@ -29,6 +31,7 @@ const stake = () => {
   const [stakingEnd, setStakingEnd] = useState(0)
   useEffect(() => {
     if(blocks.account) {
+      let web3 = new Web3(blocks.provider);
     //var tarehe = new Date(blocks.stake12.timestampEnd * 1000).toLocaleDateString("en-US")
     var stake6Date = new Date(blocks.stake6.timestamp * 1000).toLocaleDateString("en-UK")
     var stake9Date = new Date(blocks.stake9.timestamp * 1000).toLocaleDateString("en-UK")
@@ -43,9 +46,11 @@ const stake = () => {
       if(blocks.stake6.timestamp == 0) {
         setStakingDate(0)
         setStakingEnd(0)
+        setReceived(web3.utils.fromWei(blocks.stake6.received))
       } else {
         setStakingDate(stake6Date)
         setStakingEnd(stake6endDate)
+        setReceived(web3.utils.fromWei(blocks.stake6.received))
       }
       
       
@@ -53,25 +58,31 @@ const stake = () => {
       if(blocks.stake9.timestamp == 0) {
         setStakingDate(0)
         setStakingEnd(0)
+        setReceived(web3.utils.fromWei(blocks.stake9.received))
       } else {
         setStakingDate(stake9Date)
         setStakingEnd(stake9endDate)
+        setReceived(Math.fround(web3.utils.fromWei(blocks.stake9.received)))
       }
     } else if (compoundValue == 7) {
       if(blocks.stake12.timestamp == 0) {
         setStakingDate(0)
         setStakingEnd(0)
+        setReceived(Math.fround(web3.utils.fromWei(blocks.stake12.received)))
       } else {
         setStakingDate(stake12Date)
         setStakingEnd(stake12endDate)
+        setReceived(Math.trunc(web3.utils.fromWei(blocks.stake12.received)))
       }
     } else if (compoundValue == 9){
       if(blocks.stake15.timestamp == 0) {
         setStakingDate(0)
         setStakingEnd(0)
+        setReceived(web3.utils.fromWei(blocks.stake15.received))
       } else {
         setStakingDate(stake15Date)
         setStakingEnd(stake15endDate)
+        setReceived(web3.utils.fromWei(blocks.stake15.received))
       }
     }
     
@@ -213,18 +224,24 @@ const stake = () => {
                 <p>Total staked</p>
                 <p className="font-bold text-3xl text-red-600">
                   {totalStake +" husko"}
-
-                  {totalStake == 0 ? <></> : <Button
+                  
+                  {totalStake == 0 ? <></> : <><br/><br/><Button
                     style={"solid"}
                     type={"submit"}
                     text={"unstake"}
                     action={_ => {
                       UnStake(compoundValue);
                     }}
-                  />}
+                  /> </>}
                 </p>
               </div>
             </div>
+            <div className="flex-1 border py-3 px-3 border-white">
+                <p>Total Received</p>
+                <p className="font-bold text-2xl text-red-600">
+                  {received}
+                </p>
+              </div>
           </div>
         </div>
       </div>

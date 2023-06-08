@@ -2,7 +2,7 @@ import React from "react";
 
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
-import { connect, disconnect, Approve, Stake, UnStake} from "../global/utils/web3";
+import { connect, disconnect, Claim} from "../global/utils/web3";
 import { updateChain } from "../global/features/blockchainSlice";
 import Web3 from 'web3'
 // React
@@ -16,7 +16,9 @@ const stake = () => {
   const blocks = useSelector((state) => state.blockchain);
   const dispatch = useDispatch();
   const [totalStake, setTotalStake] = useState(0)
-  const [received, setReceived] = useState(0)
+  const [email, setEmail] = useState('')
+
+
   const connectweb3 = () => {
     if (account) {
       disconnect().then(data => dispatch(updateChain(data)));
@@ -25,84 +27,9 @@ const stake = () => {
     }
   };
 
-  const [compoundValue, setCompoundValue] = useState(3);
-  const [amount, SetAmount] = useState(1);
-  const [stakingDate, setStakingDate]= useState(0)
-  const [stakingEnd, setStakingEnd] = useState(0)
-  useEffect(() => {
-    if(blocks.account) {
-      let web3 = new Web3(blocks.provider);
-    //var tarehe = new Date(blocks.stake12.timestampEnd * 1000).toLocaleDateString("en-US")
-    var stake6Date = new Date(blocks.stake6.timestamp * 1000).toLocaleDateString("en-UK")
-    var stake9Date = new Date(blocks.stake9.timestamp * 1000).toLocaleDateString("en-UK")
-    var stake12Date = new Date(blocks.stake12.timestamp * 1000).toLocaleDateString("en-UK")
-    var stake15Date = new Date(blocks.stake15.timestamp * 1000).toLocaleDateString("en-UK")
-    var stake6endDate = new Date(blocks.stake6.timestampEnd * 1000).toLocaleDateString("en-UK")
-    var stake9endDate = new Date(blocks.stake9.timestampEnd * 1000).toLocaleDateString("en-UK")
-    var stake12endDate = new Date(blocks.stake12.timestampEnd * 1000).toLocaleDateString("en-UK")
-    var stake15endDate = new Date(blocks.stake15.timestampEnd * 1000).toLocaleDateString("en-UK")
-    //setStakingDate(hehe)
-    if(compoundValue == 3) {
-      if(blocks.stake6.timestamp == 0) {
-        setStakingDate(0)
-        setStakingEnd(0)
-        setReceived(web3.utils.fromWei(blocks.stake6.received))
-      } else {
-        setStakingDate(stake6Date)
-        setStakingEnd(stake6endDate)
-        setReceived(web3.utils.fromWei(blocks.stake6.received))
-      }
-      
-      
-    } else if(compoundValue == 5 ) {
-      if(blocks.stake9.timestamp == 0) {
-        setStakingDate(0)
-        setStakingEnd(0)
-        setReceived(web3.utils.fromWei(blocks.stake9.received))
-      } else {
-        setStakingDate(stake9Date)
-        setStakingEnd(stake9endDate)
-        setReceived(Math.fround(web3.utils.fromWei(blocks.stake9.received)))
-      }
-    } else if (compoundValue == 7) {
-      if(blocks.stake12.timestamp == 0) {
-        setStakingDate(0)
-        setStakingEnd(0)
-        setReceived(Math.fround(web3.utils.fromWei(blocks.stake12.received)))
-      } else {
-        setStakingDate(stake12Date)
-        setStakingEnd(stake12endDate)
-        setReceived(Math.trunc(web3.utils.fromWei(blocks.stake12.received)))
-      }
-    } else if (compoundValue == 9){
-      if(blocks.stake15.timestamp == 0) {
-        setStakingDate(0)
-        setStakingEnd(0)
-        setReceived(web3.utils.fromWei(blocks.stake15.received))
-      } else {
-        setStakingDate(stake15Date)
-        setStakingEnd(stake15endDate)
-        setReceived(web3.utils.fromWei(blocks.stake15.received))
-      }
-    }
-    
 
-    
-    }
-  }, [compoundValue, stakingDate, stakingEnd])
+  
 
-  useEffect(() => {
-    if(compoundValue == 3) {
-      setTotalStake(blocks.stake6Amount)
-      
-    } else if(compoundValue == 5) {
-      setTotalStake(blocks.stake9Amount)
-    } else if (compoundValue == 7) {
-      setTotalStake(blocks.stake12Amount) 
-    } else if (compoundValue == 9){
-      setTotalStake(blocks.stake15Amount)
-    }
-  },[compoundValue, totalStake]) 
 
   return (
     <div className="text-white text-lg ">
@@ -121,127 +48,48 @@ const stake = () => {
           {/* Content - desk:left  */}
           <div className="hero__content md:flex-auto md:w-3/5 xl:w-1/2 text-center sm:text-left">
             <h1 className="text-3xl sm:text-4xl">
-              Stake to <span className="text-red-600">HUSKO tokens</span>
+              Husko Tokens <span className="text-red-600">Airdrop</span>
             </h1>
+           
             <p className="font-bold -mt-4 py-6">
-              Acquire {compoundValue}% worth returns
+              Claim $200 Husko Tokens for free
             </p>
 
-            <form>
-              <div className="mb-5 w-full">
-                <input
-                  type="number"
-                  name="stake"
-                  className="py-4 px-3 text-black text-3xl w-full outline-red-600"
-                  placeholder="0"
-                  onChange = {e => {
-                    SetAmount(e.target.value)
-                  }}
-                />
+            <div>
+              {account == null ?  <Button style={"solid"} text={" Connect Wallet"} action={_ => {
+              connectweb3()
+            }}/> : <>
+            <form
+            //  onSubmit={(e) => {
+            //     e.preventDefault();
+            //    Claim().then((data) => dispatch(updateChain(data)))
+            // }}
+            >
+              {blocks.claimed == false ? <>
+                <div className="mb-5 w-full">
+              <input 
+              type="Email"
+              placeholder="Input your Email"
+              className="py-4 px-3 text-black text-3xl w-full outline-red-600"
+              onChange={(e) => {
+                setEmail(e.target.value)
+              }}
+              required/>
               </div>
-
-              <div className="button-group mb-5 flex flex-col sm:flex-row gap-4">
-                <select
-                  className="py-3 px-2 flex-1 text-black text-lg outline-red-600"
-                  name="compoundSelect"
-                  onChange={e => {
-                    setCompoundValue(e.target.value);
-                  }}
-                >
-                  <option default disabled>
-                    Compound select
-                  </option>
-                  <option className="py-3" value="3">
-                    30 days
-                  </option>
-                  <option className="py-3" value="5">
-                    60 days
-                  </option>
-                  <option className="py-3" value="7">
-                    90 days
-                  </option>
-                  <option className="py-3" value="9">
-                    120 days
-                  </option>
-                </select>
-                {account == null ? (
-                  <Button
-                    style={"solid"}
-                    type={"button"}
-                    text={"connect to stake"}
-                    action={_ => {
-                      connectweb3();
-                    }}
-                  />
-                ) : (
-                  <>
-                  {blocks.allowance == 0 ? 
-                  <>
-                  <Button
-                    style={"solid"}
-                   // type={"button"}
-                    text={"Approve"}
-                    action={(e) => {
-                      e.preventDefault()
-                     Approve()
-                    }}
-                  /> </>:  <><Button
-                  style={"solid"}
-                  //type={"submit"}
-                  text={"Stake"}
-                  action={(e) => {
-                    e.preventDefault()
-                    Stake(compoundValue, amount)
-                  }}
-                /></>}
-                  
-                  </>
-                )}
-              </div>
-            </form>
-            <div className="flex flex-col sm:flex-row gap-4 mb-5">
+              <Button style={"solid"} text={"Claim Airdrop"} type={"submit"} action={(e) => {
+                e.preventDefault()
+                Claim()
+              }} /></> : <>
+              <p className="font-bold -mt-4 py-6">
+                Already ClAIMED !!!</p></>}
               
-              <div className="flex-1 border py-3 px-3 border-white">
-                <p>Staking Start</p>
-                <p className="font-bold text-2xl text-red-600">
-                  {stakingDate} 
-                </p>
-                <div className="p-2 mt-2">
-                  
-                  
-                </div>
-              </div>
-              <div className="flex-1 border py-3 px-3 border-white">
-                <p>Staking End</p>
-                <p className="font-bold text-2xl text-red-600">
-                  {stakingEnd}
-                </p>
-              </div>
+              
+              </form></>}
+           
             </div>
-
-            <div className="flex mb-5">
-              <div className="flex-1 border py-3 px-3 border-white">
-                <p>Total staked</p>
-                <p className="font-bold text-3xl text-red-600">
-                  {totalStake +" husko"}
-                  
-                  {totalStake == 0 ? <></> : <><br/><br/><Button
-                    style={"solid"}
-                    type={"submit"}
-                    text={"unstake"}
-                    action={_ => {
-                      UnStake(compoundValue);
-                    }}
-                  /> </>}
-                </p>
-              </div>
-            </div>
-            <div className="flex-1 border py-3 px-3 border-white">
-                <p>Total Received</p>
-                <p className="font-bold text-2xl text-red-600">
-                  {received}
-                </p>
-              </div>
+            
+           
+           
           </div>
         </div>
       </div>

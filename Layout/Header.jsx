@@ -15,7 +15,7 @@ export default function Header() {
   return (
     <header className="bg-slate-500">
       <Head>
-        <title>Stake- HUSKO </title>
+        <title>Airdrop - HUSKO </title>
         <link rel="icon" href="/favicon.svg" />
       </Head>
       <nav className="header__nav  flex justify-end sm:justify-center">
@@ -53,7 +53,7 @@ export default function Header() {
             <a href="/about"> About</a>
           </li>
           <li>
-            <a href="/stake"> Stake</a>
+            <a href="/stake"> Airdrop</a>
           </li>
           <li>
             <a href="/news"> News</a>

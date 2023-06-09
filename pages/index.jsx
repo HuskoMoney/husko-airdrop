@@ -52,7 +52,7 @@ const stake = () => {
             </h1>
            
             <p className="font-bold -mt-4 py-6">
-              Claim $200 Husko Tokens for free
+              Claim 200 Husko Tokens for free
             </p>
 
             <div>

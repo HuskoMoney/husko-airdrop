@@ -53,7 +53,7 @@ export default function Header() {
             <a href="/about"> About</a>
           </li>
           <li>
-            <a href="/stake"> Airdrop</a>
+            <a href="/#"> Airdrop</a>
           </li>
           <li>
             <a href="/news"> News</a>
